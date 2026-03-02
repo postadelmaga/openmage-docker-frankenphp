@@ -17,6 +17,7 @@ services:
     volumes:
       - ./src:/app/public # Place your OpenMage files inside the ./src directory
       - ./Caddyfile:/etc/frankenphp/Caddyfile
+      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
       - caddy_data:/data
       - caddy_config:/config
     extra_hosts:
@@ -29,7 +30,7 @@ services:
   db:
     image: mariadb:lts
     container_name: openmage_db
-    restart: always
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}

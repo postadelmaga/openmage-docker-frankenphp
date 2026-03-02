@@ -18,13 +18,6 @@ RUN install-php-extensions \
     sockets \
     @composer
 
-RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.start_with_request=trigger" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "max_execution_time=300" >> /usr/local/etc/php/conf.d/custom.ini && \
-    echo "memory_limit=512M" >> /usr/local/etc/php/conf.d/custom.ini
-
 ARG USER_ID=1000
 
 RUN adduser -D -u ${USER_ID} appuser && \

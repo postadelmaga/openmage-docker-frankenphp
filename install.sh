@@ -3,8 +3,8 @@ set -e
 
 # Copy .env.example to .env if it doesn't exist
 if [ ! -f .env ]; then
-    cp .env.example .env
-    echo ".env created from .env.example"
+    cp env.example .env
+    echo ".env created from env.example"
 fi
 
 # Set UID to the current user's value
@@ -157,7 +157,6 @@ docker exec openmage_db mariadb -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATA
 DELETE FROM core_config_data WHERE path IN ('admin/url/use_custom', 'admin/url/custom', 'web/unsecure/base_url', 'web/secure/base_url');
 INSERT INTO core_config_data (scope, scope_id, path, value) VALUES
 ('default', 0, 'admin/url/use_custom',  '1'),
-('default', 0, 'admin/url/custom',      '${ADMIN_URL}admin/'),
 ('default', 0, 'web/unsecure/base_url', '$BASE_URL'),
 ('default', 0, 'web/secure/base_url',   '$BASE_URL'),
 ('stores',  0, 'web/unsecure/base_url', '$ADMIN_URL'),

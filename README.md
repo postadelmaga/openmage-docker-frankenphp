@@ -87,17 +87,24 @@ docker cp openmage_app:/data/caddy/pki/authorities/local/root.crt ./caddy-root.c
 ```bash
 sudo cp caddy-root.crt /etc/ca-certificates/trust-source/anchors/caddy-root.crt
 sudo trust extract-compat
+## For Chrome (arch package nss)
+certutil -d sql:$HOME/.pki/nssdb -A -t "CT,," -n "Caddy Local CA" -i ./caddy-root.crt
 ```
 
 **Debian / Ubuntu:**
 ```bash
 sudo cp caddy-root.crt /usr/local/share/ca-certificates/caddy-root.crt
 sudo update-ca-certificates
+## For Chrome (ubuntu package libnss3-tools)
+certutil -d sql:$HOME/.pki/nssdb -A -t "CT,," -n "Caddy Local CA" -i ./caddy-root.crt
 ```
 
-**Chrome / Chromium:** go to `chrome://settings/certificates` → **Authorities** → **Import** → select `caddy-root.crt` → check "Trust this certificate for identifying websites".
+**Chrome / Chromium:** 
+if you used certutil, you can skip the manual import.
+go to `chrome://settings/certificates` → **Authorities** → **Import** → select `caddy-root.crt` → check "Trust this certificate for identifying websites".
 
-**Firefox:** Settings → Privacy & Security → Certificates → View Certificates → Authorities → Import → select `caddy-root.crt`.
+**Firefox:** 
+Settings → Privacy & Security → Certificates → View Certificates → Authorities → Import → select `caddy-root.crt`.
 
 Restart your browser after importing.
 
